@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>First Day: Wrestling Practice</title>
+<style>
+:root{--bg:#141a26;--mat:#1f6f4a;--mat2:#185a3c;--card:#1e2739;--line:#33415e;--txt:#eef3ff;--muted:#a9b6d3;--gold:#ffbf3f;--red:#ff5d5d;--green:#3ddc84}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:radial-gradient(1200px 600px at 50% -10%,#2a3a5f,var(--bg));color:var(--txt);min-height:100vh}
+.wrap{max-width:1080px;margin:0 auto;padding:16px 16px 40px}
+header{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.badge{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#0b1220;background:var(--gold);border-radius:999px;padding:6px 12px;font-weight:800}
+h1{margin:6px 0 0;font-size:clamp(24px,4vw,40px);line-height:1.05}
+.sub{color:var(--muted);margin:6px 0 0;max-width:62ch}
+.layout{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;margin-top:16px}
+@media(max-width:860px){.layout{grid-template-columns:1fr}}
+.card{background:linear-gradient(180deg,#222d47,#1a2338);border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:0 12px 40px rgba(0,0,0,.35)}
+.mat{position:relative;border-radius:12px;overflow:hidden;background:radial-gradient(circle at 50% 45%,#2a9a63 0 18%,var(--mat) 19% 55%,var(--mat2) 56% 100%);border:2px solid #0e3d26;min-height:340px;display:flex;align-items:center;justify-content:center}
+.mat::after{content:"";position:absolute;inset:14px;border:3px solid rgba(255,255,255,.75);border-radius:50%;pointer-events:none}
+.fighter{position:absolute;bottom:44px;width:92px;height:130px;transition:left .25s,transform .25s}
+.fighter .head{width:34px;height:34px;border-radius:50%;background:#f2c69b;margin:0 auto;border:3px solid #222}
+.fighter .body{width:56px;height:62px;margin:4px auto 0;border-radius:14px;background:#24408f;border:3px solid #101c3a}
+.fighter.away .body{background:#8f2424}
+.fighter .legs{display:flex;gap:8px;justify-content:center;margin-top:4px}
+.fighter .legs i{display:block;width:14px;height:30px;background:#0f1830;border-radius:6px}
+#you{left:28%}
+#rival{left:58%}
+.coach{position:absolute;top:12px;left:12px;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.25);padding:8px 10px;border-radius:10px;font-size:13px}
+.hype{position:absolute;top:12px;right:12px;background:rgba(0,0,0,.55);border:1px solid var(--gold);color:var(--gold);padding:8px 10px;border-radius:10px;font-size:13px;font-weight:700}
+#overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(8,12,22,.72);backdrop-filter:blur(2px);padding:16px;text-align:center}
+#overlay.hidden{display:none}
+.panel{background:#0f172a;border:1px solid var(--line);border-radius:14px;padding:18px;max-width:520px}
+.panel h2{margin:0 0 8px;font-size:24px}
+.panel p{color:#cdd8ef;font-size:14px;line-height:1.5}
+.btn{appearance:none;border:0;border-radius:12px;padding:12px 18px;font-weight:800;font-size:16px;cursor:pointer;background:var(--gold);color:#14100a}
+.btn.secondary{background:#2e3d63;color:#fff;border:1px solid #4a5f95}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;justify-content:center}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.stat{background:#0f172a;border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center}
+.stat b{font-size:20px;display:block}
+.stat span{font-size:12px;color:var(--muted)}
+.bar{height:8px;background:#0b1220;border-radius:99px;overflow:hidden;margin-top:8px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--green),var(--gold));width:50%}
+.story{min-height:120px;font-size:15px;line-height:1.6;color:#e6edff}
+.choices{display:grid;gap:8px;margin-top:12px}
+.choices button{text-align:left;background:#101b33;border:1px solid #3b4f82;color:#fff;border-radius:10px;padding:10px 12px;cursor:pointer;font-size:14px}
+.choices button:hover{border-color:var(--gold)}
+.drill{margin-top:12px;border-top:1px solid var(--line);padding-top:12px}
+.timing{height:26px;background:#0b1220;border:1px solid var(--line);border-radius:99px;position:relative;overflow:hidden;margin:10px 0}
+.timing .zone{position:absolute;top:0;bottom:0;background:rgba(61,220,132,.45);border-left:2px solid var(--green);border-right:2px solid var(--green)}
+.timing .needle{position:absolute;top:-2px;bottom:-2px;width:4px;background:var(--gold)}
+.log{font-size:13px;color:var(--muted);line-height:1.5;max-height:150px;overflow:auto;background:#0b1326;border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin-top:10px}
+footer{color:var(--muted);font-size:12px;margin-top:14px;text-align:center}
+.kbd{font-family:ui-monospace,monospace;background:#000;border:1px solid #444;border-radius:6px;padding:1px 6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<div><span class="badge">Realistic sports story • Day 1</span><h1>First Day at Wrestling Practice</h1>
+<p class="sub">You're the new wrestler. The team is buzzing with a strange, wild surge of mat energy — everyone's intense, loud, and extra competitive. Keep your cool, learn the fundamentals, earn respect.</p></div>
+<div class="card" style="min-width:220px"><div style="font-size:12px;color:var(--muted)">DAY PROGRESS</div><div style="font-size:22px;font-weight:800" id="dayLabel">Warm-up 1/5</div><div class="bar"><i id="dayBar" style="width:20%"></i></div></div>
+</header>
+<div class="layout">
+<div class="card">
+<div class="mat" id="mat">
+<div class="coach">� whistle Coach Ray: “Feet moving, rookies!”</div>
+<div class="hype">⚡ Team hype: WILD</div>
+<div class="fighter" id="you"><div class="head"></div><div class="body"></div><div class="legs"><i></i><i></i></div></div>
+<div class="fighter away" id="rival"><div class="head"></div><div class="body"></div><div class="legs"><i></i><i></i></div></div>
+<div id="overlay"><div class="panel">
+<h2>Mat Room, 3:45 PM</h2>
+<p>You step onto the mat for the first time. The veterans are already drenched, chanting, shadow-wrestling like the room is electric. Something has them <b>hyper-focused and intense</b> — rumor is an old “founder’s chant” hypes everyone beyond normal. Your goal: survive warm-ups, learn 3 drills, win a friendly live go.</p>
+<p style="color:var(--gold)">SFW sports story about discipline, teamwork &amp; nerves. No explicit content.</p>
+<div class="row"><button class="btn" id="startBtn">Start Game</button></div>
+<div class="row"><span style="font-size:12px;color:var(--muted)">Press <span class="kbd">Space</span> for timing drills • Tap buttons on mobile</span></div>
+</div></div>
+</div>
+<div class="stats">
+<div class="stat"><b id="stamina">80</b><span>STAMINA</span><div class="bar"><i id="staminaBar"></i></div></div>
+<div class="stat"><b id="tech">10</b><span>TECHNIQUE</span><div class="bar"><i id="techBar"></i></div></div>
+<div class="stat"><b id="respect">0</b><span>RESPECT</span><div class="bar"><i id="respectBar"></i></div></div>
+</div>
+</div>
+<div class="card">
+<div class="story" id="story">Coach blows the whistle. “New kid! Show me a stance!” Choose how you enter practice.</div>
+<div class="choices" id="choices"></div>
+<div class="drill" id="drill" style="display:none">
+<div style="font-weight:800" id="drillTitle">Drill</div>
+<div style="font-size:13px;color:var(--muted)" id="drillHint"></div>
+<div class="timing" id="timing" style="display:none"><div class="zone" id="zone"></div><div class="needle" id="needle"></div></div>
+<div class="row"><button class="btn" id="actionBtn">Go!</button>
+<button class="btn secondary" id="skipBtn">Catch breath (-5 stamina → +10 next)</button></div>
+</div>
+<div class="log" id="log" aria-live="polite"></div>
+</div>
+</div>
+<footer>Built as a single static file • keyboard + touch • realistic practice flow: stance → sprawl → takedown → live go</footer>
+</div>
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const story=$('story'),choices=$('choices'),log=$('log'),drill=$('drill'),drillTitle=$('drillTitle'),drillHint=$('drillHint'),
+timing=$('timing'),zone=$('zone'),needle=$('needle'),actionBtn=$('actionBtn'),skipBtn=$('skipBtn'),
+overlay=$('overlay'),startBtn=$('startBtn'),you=$('you'),rival=$('rival');
+let S={stage:0,stamina:80,tech:10,respect:0,pos:28,rpos:58,needle:0,dir:1,playing:false,timer:null,zoneL:38,zoneW:22,drill:null,round:1};
+function say(t){story.innerHTML=t}
+function addLog(t){const d=document.createElement('div');d.textContent=t;log.prepend(d)}
+function render(){ $('stamina').textContent=S.stamina;$('tech').textContent=S.tech;$('respect').textContent=S.respect;
+$('staminaBar').style.width=Math.max(0,Math.min(100,S.stamina))+'%';$('techBar').style.width=Math.max(0,Math.min(100,S.tech))+'%';$('respectBar').style.width=Math.max(0,Math.min(100,S.respect))+'%';
+you.style.left=S.pos+'%';rival.style.left=S.rpos+'%';
+const steps=['Warm-up 1/5','Stance 2/5','Sprawl 3/5','Takedown 4/5','Live go 5/5'];$('dayLabel').textContent=steps[Math.min(4,S.stage)];$('dayBar').style.width=((S.stage+1)/5*100)+'%'}
+function setChoices(list){choices.innerHTML='';list.forEach(c=>{const b=document.createElement('button');b.innerHTML=c;b.onclick=()=>pick(c);choices.appendChild(b)})}
+function clearChoices(){choices.innerHTML=''}
+function stage0(){S.stage=0;render();say('Coach blows the whistle. “New kid! Show me a stance!” The vets are bouncing off the walls from that wild pre-practice chant. How do you step in?');setChoices(['🦶 <b>Low &amp; calm:</b> sink into a solid stance and breathe','🔥 <b>Match their fire:</b> slap the mat and yell with them','👀 <b>Watch first:</b> study the captain’s feet for 30 seconds'])}
+function pick(c){
+if(S.stage===0){
+if(c.includes('Low')){S.tech+=8;S.respect+=8;S.stamina-=5;addLog('Solid stance. Coach nods. +8 technique, +8 respect.')}
+else if(c.includes('Match')){S.respect+=12;S.stamina-=12;addLog('You match their wild energy! Crowd loves it. +12 respect, -12 stamina.')}
+else{S.tech+=12;S.stamina-=2;addLog('Smart. You pick up the footwork fast. +12 technique.')}
+return stage1()}
+if(S.stage===4){return liveChoice(c)}
+}
+function stage1(){S.stage=1;render();clearChoices();say('<b>Drill 1 — Stance &amp; motion.</b> Shuffle without crossing feet. Hit <b>Go!</b> when the gold needle is in the green window.');startTiming('Stance shuffle',()=>{S.tech+=10;S.respect+=6;S.stamina-=8;addLog('Clean motion! +10 technique.')},()=>{S.stamina-=10;addLog('Feet tangled. Coach: “Again!” -10 stamina.')},1.6)}
+function stage2(){S.stage=2;render();say('<b>Drill 2 — Sprawl reaction.</b> Coach claps = sprawl! Time it in the green. The team is howling — stay locked in.');startTiming('Sprawl!',()=>{S.tech+=12;S.respect+=10;S.stamina-=10;addLog('Lightning sprawl! Vets slap your shoulders. +10 respect.')},()=>{S.stamina-=12;addLog('Late sprawl, you do 5 push-ups. -12 stamina.')},2.1)}
+function stage3(){S.stage=3;render();say('<b>Drill 3 — Double-leg timing.</b> Penetrate as the rival steps in. Smaller window, faster needle. Breathe!');startTiming('Shoot the double!',()=>{S.tech+=15;S.respect+=12;S.stamina-=12;addLog('Beautiful finish! The room erupts. +15 technique.')},()=>{S.stamina-=14;addLog('Stuffed at the hips. Shake it off. -14 stamina.')},2.7)}
+function stage4(){S.stage=4;render();drill.style.display='none';timing.style.display='none';stopNeedle();say('Final test — <b>friendly live go, 60 seconds.</b> The captain, weirdly intense but fair, offers a fist bump. Your legs are jelly. Game plan?');setChoices(['🤼 <b>Patient defense:</b> hand-fight, wait for his wild shot','⚡ <b>Bring the energy:</b> snap-downs and non-stop motion','🫁 <b>Survive &amp; learn:</b> focus on breathing and position'])}
+function liveChoice(c){
+clearChoices();let bonus=0;
+if(c.includes('Patient')){bonus=12+S.tech*0.3;addLog('You stay patient as he over-commits...')}
+else if(c.includes('Bring')){bonus=8+S.respect*0.3;S.stamina-=10;addLog('You meet fire with fire! Scramble!')}
+else{bonus=10;S.stamina+=5;addLog('You breathe, circle, learn every grip.')}
+const score=Math.round(bonus+(Math.random()*10));
+S.respect+=15;S.tech+=8;
+if(score>16){say('🏆 <b>You score a late takedown!</b> The spell of wild hype breaks into laughter and high-fives. “You BELONG here, rookie!” Final: Technique '+S.tech+', Respect '+S.respect+'. <b>Refresh to run it back.</b>')}
+else if(S.stamina<=0){say('🥵 <b>You gas out but never quit.</b> Coach: “Heart! We’ll build the lungs.” The team carries the energy for you. Final respect '+S.respect+'. <b>Refresh to try again.</b>')}
+else{say('🤝 <b>0-0 but you battled!</b> Captain grins, the wild look fading: “First day and you hung with me? Respect.” Final: Tech '+S.tech+', Respect '+S.respect+'. <b>Refresh to run it back.</b>')}
+S.stage=5;render();addLog('Practice ends. Team circles up — the chant now sounds like family.')}
+function startTiming(title,win,fail,speed){
+drill.style.display='block';timing.style.display='block';drillTitle.textContent='Drill: '+title;drillHint.textContent='Press Go! (or Space) when gold is inside green. Needle speeds up each round.';
+S.drill={win,fail};S.zoneL=30+Math.random()*30;S.zoneW=Math.max(12,22-(speed*3));zone.style.left=S.zoneL+'%';zone.style.width=S.zoneW+'%';
+stopNeedle();S.playing=true;S.needle=0;S.dir=1;S.speed=speed;
+S.timer=setInterval(()=>{S.needle+=S.dir*S.speed;if(S.needle>=100){S.needle=100;S.dir=-1}if(S.needle<=0){S.needle=0;S.dir=1}needle.style.left=S.needle+'%';
+S.pos=26+Math.sin(S.needle/12)*4;S.rpos=60-Math.sin(S.needle/10)*4;you.style.left=S.pos+'%';rival.style.left=S.rpos+'%'},16);
+actionBtn.textContent='Go!';actionBtn.onclick=hit;skipBtn.onclick=()=>{S.stamina-=5;S.tech+=2;addLog('You sip water, reset. -5 stamina now, sharper next rep.');render()}}
+function stopNeedle(){if(S.timer){clearInterval(S.timer);S.timer=null}S.playing=false}
+function hit(){
+if(!S.playing||!S.drill)return;stopNeedle();
+const inZone=S.needle>=S.zoneL&&S.needle<=S.zoneL+S.zoneW;
+if(inZone){S.drill.win()}else{S.drill.fail()}
+render();
+setTimeout(()=>{if(S.stage===1)stage2();else if(S.stage===2)stage3();else if(S.stage===3)stage4()},900);
+say(inZone?'✅ <b>Naheld it!</b> Resetting...':'❌ <b>Missed the window.</b> Resetting...');S.drill=null}
+document.addEventListener('keydown',e=>{if(e.code==='Space'&&S.playing){e.preventDefault();hit()}});
+startBtn.addEventListener('click',()=>{overlay.classList.add('hidden');addLog('Whistle! Practice starts. The room is LOUD with wild team energy.');stage1();render()});
+actionBtn.addEventListener('keydown',e=>{if(e.key==='Enter')hit()});
+render();addLog('You lace up. Mat smells like rubber and ambition.');
+})();
+</script>
+</body>
+</html>
